@@ -5,7 +5,7 @@ const routes = express.Router();
 const studentcontroller = require ("../Controller/studentcontroller");
 // Get a list of students from the database
 routes.get('/getStudents',studentcontroller.getAllStudents );
-
+routes.get('/getStudent',studentcontroller.getStudent);
 // Add a student to the database
 routes.post('/addStudents',studentcontroller.addStudent);
 

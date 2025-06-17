@@ -1,4 +1,5 @@
 const Student = require("../models/studentmodels");
+const craeteError =require("http-errors");
 module.exports={
 
     addStudent: async (req, res, next) => {
@@ -8,6 +9,12 @@ module.exports={
         res.send(result);
     } catch (error) {
         console.log(error.message);
+
+        if(error.name==="ValidationError"){
+            next(craeteError(422,error.message))
+            return;
+        }
+        next(error)
        
     }
 },
@@ -15,7 +22,7 @@ module.exports={
     try {
         const students = await Student.find({});
         res.send(students);
-    }   catch (error) {
+    }   catch (error) {`2ec`
         console.log(error.message);
        
     }
@@ -41,7 +48,24 @@ module.exports={
     } catch (error) {
         console.log(error.message)
     }
-}
+},
+       getStudent:async(req,res,next)=>{
+        const id = req.params.id;
+        try{
+            const student = await Student .findById (id)
+            if(!student){
+                throw(createError(404,"student does not exist"))
+            }
+            res.send(student)
+        }catch(error){
+            console.log(error.message);
+            if(error instanceof mongoose.CastError){
+                next(craeteError(400,"Invalid student id"));
+                return;
+            }
+            next(error);
+        }
+       }
 
 
 
