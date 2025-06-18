@@ -27,15 +27,7 @@ module.exports={
        
     }
 },
-       deleteStudent:async(req, res) => {
-    const id = req.params.id
-    try {
-        const student = await Student.findByIdAndDelete(id) 
-        res.send(student);
-    } catch (error) {
-        console.log(error.message);
-    }
-},
+      
      updateStudent:async (req, res, next)=> {
     try {
         const id = req.params.id;
@@ -65,7 +57,24 @@ module.exports={
             }
             next(error);
         }
-       }
+       },
+       deleteStudent:async(req, res) => {
+    const id = req.params.id
+    try {
+        const student = await Student.findByIdAndDelete(id) 
+        if (!student) {
+            throw createError(404, "Student does not exist");
+        }
+        res.send(student);
+
+    } catch (error) {
+        console.log(error.message)
+        if (error instanceof mongoose.CastError) {
+            next(createError(400, "Invalid student id"));
+            return ;
+        }
+    }
+},
 
 
 
