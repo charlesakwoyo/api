@@ -1,13 +1,14 @@
 
 const express = require("express");
 const routes = express.Router();
+const { verifyAccessToken } = require("../helpers/jwtHelper");
 
 const studentcontroller = require ("../Controller/studentcontroller");
 // Get a list of students from the database
-routes.get('/getStudents',studentcontroller.getAllStudents );
-routes.get('/getStudent',studentcontroller.getStudent);
+routes.get('/getStudents',verifyAccessToken,studentcontroller.getAllStudents );
+routes.get('/getStudent',verifyAccessToken,studentcontroller.getStudent);
 // Add a student to the database
-routes.post('/addStudents',studentcontroller.addStudent);
+routes.post('/addStudents',verifyAccessToken,studentcontroller.addStudent);
 
 // Update a student in the database
 // routes.put('/students/:id', (req, res) => {
@@ -15,8 +16,8 @@ routes.post('/addStudents',studentcontroller.addStudent);
 // });
 
 // Delete a student from the database
-routes.delete('/deleteStudents/:id',studentcontroller.deleteStudent);
-routes.patch('/updateStudents/:id',studentcontroller.updateStudent );
+routes.delete('/deleteStudents/:id',verifyAccessToken,studentcontroller.deleteStudent);
+routes.patch('/updateStudents/:id',verifyAccessToken,studentcontroller.updateStudent );
 module.exports = routes;
 
 

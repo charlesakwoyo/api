@@ -1,6 +1,7 @@
 const User = require("../models/userModel");
 const createError = require("http-errors");
 const { authSchema } = require("../helpers/validationSchema");
+const { signAccessToken } = require("../helpers/jwtHelper");
 
 module.exports = {
   // REGISTER
@@ -40,9 +41,12 @@ module.exports = {
 
       if (!isMatch) {
         throw createError.Unauthorized("Invalid username or password");
-      }
 
-      res.send("Logged in successfully"); // Fixed syntax
+        
+      }
+      const accessToken = await signAccessToken(user.id);
+
+      res.send({accessToken}); // Fixed syntax
     } catch (error) {
       if (error.isJoi === true) {
         return next(createError.BadRequest("Invalid username/password"));
