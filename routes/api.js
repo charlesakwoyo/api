@@ -8,7 +8,7 @@ const studentcontroller = require ("../Controller/studentcontroller");
 routes.get('/getStudents',verifyAccessToken,studentcontroller.getAllStudents );
 routes.get('/getStudent',verifyAccessToken,studentcontroller.getStudent);
 // Add a student to the database
-routes.post('/addStudents',verifyAccessToken,studentcontroller.addStudent);
+routes.post('/addStudent',studentcontroller.addStudent);
 
 // Update a student in the database
 // routes.put('/students/:id', (req, res) => {

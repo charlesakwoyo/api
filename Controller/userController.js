@@ -40,7 +40,7 @@ module.exports = {
       const isMatch = await user.isValidPassword(result.password); // Assuming isValidPassword is defined in your User model
 
       if (!isMatch) {
-        throw createError.Unauthorized("Invalid username or password");
+        throw createError.Unauthorized("Invalid username or password");                                                                                                                                                                                                                                                                                                                                                             
 
         
       }
