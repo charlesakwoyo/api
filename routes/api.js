@@ -1,23 +1,22 @@
-
 const express = require("express");
 const routes = express.Router();
 const { verifyAccessToken } = require("../helpers/jwtHelper");
 
-const studentcontroller = require ("../Controller/studentcontroller");
-// Get a list of students from the database
-routes.get('/getStudents',verifyAccessToken,studentcontroller.getAllStudents );
-routes.get('/getStudent',verifyAccessToken,studentcontroller.getStudent);
-// Add a student to the database
-routes.post('/addStudent',studentcontroller.addStudent);
+const studentcontroller = require("../Controller/studentcontroller");
 
-// Update a student in the database
-// routes.put('/students/:id', (req, res) => {
-//     res.send({ type: 'Update Request' });
-// });
+// Get all students
+routes.get('/getStudents', studentcontroller.getAllStudents);
 
-// Delete a student from the database
-routes.delete('/deleteStudents/:id',verifyAccessToken,studentcontroller.deleteStudent);
-routes.patch('/updateStudents/:id',verifyAccessToken,studentcontroller.updateStudent );
+// ✅ FIXED: Get a student by ID
+routes.get('/getStudent/:id',  studentcontroller.getStudent);
+
+// Add a student
+routes.post('/addStudent', studentcontroller.addStudent);
+
+// Delete a student
+routes.delete('/deleteStudent/:id', verifyAccessToken, studentcontroller.deleteStudent);
+
+// Update a student
+routes.patch('/updateStudent/:id', studentcontroller.updateStudent);
+
 module.exports = routes;
-
-
